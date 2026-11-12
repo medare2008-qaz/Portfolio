@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>강은서 · 웹디자이너 포트폴리오</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: '#D4FF3A',
+            ink: '#0A0A0A',
+          },
+          fontFamily: {
+            sans: ['Pretendard', 'Noto Sans KR', 'sans-serif'],
+            display: ['Space Grotesk', 'Pretendard', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Pretendard', 'Noto Sans KR', sans-serif; }
+
+    /* 라임 포인트 커서: 데스크톱 포인터 환경에서만 표시 */
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
+      a, button, input, select, textarea, [role="button"] { cursor: none; }
+      .custom-cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgba(212, 255, 58, .8);
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0;
+        transform: translate3d(-50%, -50%, 0) scale(1);
+        transition: width .25s ease, height .25s ease, border-color .25s ease,
+          background-color .25s ease, opacity .2s ease;
+        will-change: transform;
+      }
+      .custom-cursor::before,
+      .custom-cursor::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background: #D4FF3A;
+        transform: translate(-50%, -50%);
+        transition: opacity .2s ease, transform .2s ease;
+      }
+      .custom-cursor::before { width: 8px; height: 1px; }
+      .custom-cursor::after { width: 1px; height: 8px; }
+      .custom-cursor.is-visible { opacity: 1; }
+      .custom-cursor.is-hovering {
+        width: 52px;
+        height: 52px;
+        border-color: #D4FF3A;
+        background: rgba(212, 255, 58, .12);
+      }
+      .custom-cursor.is-hovering::before,
+      .custom-cursor.is-hovering::after { opacity: 0; transform: translate(-50%, -50%) scale(.4); }
+      .custom-cursor.is-pressed { transform: translate3d(-50%, -50%, 0) scale(.82); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .custom-cursor { transition: none; }
+    }
+
+    /* 히어로 텍스트 등장 애니메이션 */
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(40px); filter: blur(8px); }
+      to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+    }
+    .rise { opacity: 0; animation: rise 1s cubic-bezier(.2,.7,.2,1) forwards; }
+    .d1 { animation-delay: .15s; }
+    .d2 { animation-delay: .35s; }
+    .d3 { animation-delay: .55s; }
+    .d4 { animation-delay: .75s; }
+
+    /* 배경 그리드 & 글로우 */
+    .grid-bg {
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+    @keyframes float {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%     { transform: translate(40px,-30px) scale(1.1); }
+    }
+    .orb { animation: float 12s ease-in-out infinite; }
+
+    /* 마퀴 */
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-track { display: flex; width: max-content; animation: marquee 32s linear infinite; will-change: transform; }
+    .marquee-group { display: flex; flex: 0 0 auto; width: max-content; min-width: 100vw; box-sizing: border-box; align-items: center; justify-content: space-between; gap: clamp(24px, 3vw, 48px); padding: 0 1.5rem; }
+    .marquee-group > span { flex: 0 0 auto; white-space: nowrap; }
+
+    /* 커서 깜빡임 */
+    @keyframes blink { 50% { opacity: 0; } }
+    .caret::after { content: '_'; margin-left: 4px; color: #D4FF3A; animation: blink 1s steps(1) infinite; }
+
+    .idea-glow { transition: color .3s ease, text-shadow .3s ease; }
+    .idea-glow:hover { color: #D4FF3A; text-shadow: 0 0 8px rgba(212,255,58,.9), 0 0 28px rgba(212,255,58,.7), 0 0 56px rgba(212,255,58,.45); }
+
+    .growth-track { display: block; width: 33.333vw; height: 54px; overflow: visible; }
+    .growth-track .growth-line { fill: none; stroke: rgba(255,255,255,.18); stroke-width: 1.5; stroke-linecap: round; }
+    .growth-track .growth-art { fill: none; stroke: #D4FF3A; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(.72); transition: opacity .5s ease, transform .65s cubic-bezier(.2,.7,.2,1); }
+    .growth-track .growth-art.is-current { opacity: 1; transform: scale(1); }
+    .growth-track .flower-center { fill: #D4FF3A; stroke: none; }
+    @media (max-width: 640px) { .growth-track { width: 33.333vw; height: 40px; } }
+    @media (prefers-reduced-motion: reduce) {
+      .growth-track .growth-art, .idea-glow { transition: none; }
+    }
+
+    /* 카드 호버 - 이미지 확대 */
+    .work-card .thumb { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+    .work-card:hover .thumb { transform: scale(1.06); }
+    .work-filter { border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.58); transition: color .2s ease, background-color .2s ease, border-color .2s ease; }
+    .work-filter:hover { color: #D4FF3A; border-color: rgba(212,255,58,.65); }
+    .work-filter[aria-pressed="true"] { color: #0A0A0A; background: #D4FF3A; border-color: #D4FF3A; }
+    .work-card[hidden] { display: none; }
+
+    /* 스크롤 리빌 */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* 반응형 기본 */
+    ::selection { background: #D4FF3A; color: #0A0A0A; }
+  </style>
+</head>
+
+<body class="bg-ink text-white antialiased">
+  <div class="custom-cursor" aria-hidden="true"></div>
+
+  <!-- 네비게이션 -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-ink/60 border-b border-white/5">
+    <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#top" class="inline-flex items-center" aria-label="처음으로">
+        <svg class="growth-track" data-stage="seed" viewBox="0 0 320 48" role="img" aria-label="아이디어가 씨앗에서 꽃으로 자라는 과정">
+          <path class="growth-line" d="M24 39H294"/>
+          <g class="growth-art" data-growth-step="seed"><g transform="translate(24 39) scale(1.45) translate(-24 -39)"><ellipse cx="24" cy="32" rx="4" ry="6" transform="rotate(28 24 32)"/><path d="M23 36l3-7"/></g></g>
+          <g class="growth-art" data-growth-step="sprout"><g transform="translate(114 39) scale(1.4) translate(-114 -39)"><path d="M114 38V19M114 28c-7 0-9-3-9-8 6 0 9 3 9 8Zm0-5c0-6 3-9 8-10 0 5-3 9-8 10Z"/></g></g>
+          <g class="growth-art" data-growth-step="bud"><g transform="translate(204 39) scale(1.4) translate(-204 -39)"><path d="M204 38V19M204 30c-6 0-8-3-8-7 5 0 8 3 8 7Zm0-6c0-6 3-9 8-10 0 5-3 8-8 10Zm0-5c-4-2-4-5-2-8 4 2 5 5 2 8Zm0 0c1-5 3-7 7-7 0 4-3 7-7 7Z"/></g></g>
+          <g class="growth-art" data-growth-step="flower"><g transform="translate(294 39) scale(1.35) translate(-294 -39)"><path d="M294 38V23M294 32c-5 0-7-3-7-6 4 0 7 2 7 6Zm0-4c5 0 7-3 7-6-4 0-7 2-7 6Z"/><g><ellipse cx="294" cy="12.5" rx="3.2" ry="5.2"/><ellipse cx="294" cy="12.5" rx="3.2" ry="5.2" transform="rotate(60 294 18)"/><ellipse cx="294" cy="12.5" rx="3.2" ry="5.2" transform="rotate(120 294 18)"/><ellipse cx="294" cy="12.5" rx="3.2" ry="5.2" transform="rotate(180 294 18)"/><ellipse cx="294" cy="12.5" rx="3.2" ry="5.2" transform="rotate(240 294 18)"/><ellipse cx="294" cy="12.5" rx="3.2" ry="5.2" transform="rotate(300 294 18)"/></g><circle class="flower-center" cx="294" cy="18" r="2.5"/></g></g>
+        </svg>
+      </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm text-white/70">
+        <li><a href="#about" class="hover:text-accent transition">About</a></li>
+        <li><a href="#works" class="hover:text-accent transition">Works</a></li>
+        <li><a href="#contact" class="hover:text-accent transition">Contact</a></li>
+      </ul>
+      <a href="#contact" class="md:hidden text-sm text-accent">문의</a>
+    </nav>
+  </header>
+
+  <!-- 1. 히어로 -->
+  <section id="top" data-growth-stage="seed" class="relative min-h-screen flex items-center overflow-hidden grid-bg">
+    <div class="orb absolute -top-32 -right-32 w-[28rem] h-[28rem] rounded-full bg-accent/20 blur-[120px]"></div>
+    <div class="orb absolute bottom-0 -left-24 w-96 h-96 rounded-full bg-white/10 blur-[120px]" style="animation-delay:-6s"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6 pt-32 pb-24 w-full">
+      <h1 class="rise d2 text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[1.1] tracking-tight max-w-5xl">
+        Exploring <span class="idea-glow">Ideas</span>,<br />
+        <span>Creating Possibilities.</span>
+      </h1>
+
+      <p class="rise d3 mt-10 max-w-xl text-base md:text-lg text-white/60 leading-relaxed">
+        호기심으로 다양한 아이디어를 탐구하고, 새로운 가능성을 디자인합니다.
+      </p>
+
+    </div>
+
+    <div class="absolute bottom-0 inset-x-0 border-t border-white/10 py-4 overflow-hidden">
+      <div class="marquee-track font-display text-sm tracking-widest text-white/40 uppercase">
+        <div class="marquee-group" aria-hidden="true">
+          <span>Photoshop</span><span class="text-accent">✦</span><span>Illustrator</span><span class="text-accent">✦</span>
+          <span>HTML / CSS</span><span class="text-accent">✦</span><span>UI/UX Design</span><span class="text-accent">✦</span>
+          <span>Branding</span><span class="text-accent">✦</span>
+        </div>
+        <div class="marquee-group" aria-hidden="true">
+          <span>Photoshop</span><span class="text-accent">✦</span><span>Illustrator</span><span class="text-accent">✦</span>
+          <span>HTML / CSS</span><span class="text-accent">✦</span><span>UI/UX Design</span><span class="text-accent">✦</span>
+          <span>Branding</span><span class="text-accent">✦</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 소개 -->
+  <section id="about" data-growth-stage="sprout" class="py-32 px-6">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-12 gap-12 items-start">
+      <div class="reveal md:col-span-5">
+        <p class="font-display text-xs tracking-[0.3em] uppercase text-accent mb-4">01 — About</p>
+        <!-- 프로필 사진 자리 -->
+        <div class="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-white/10 to-white/0 border border-white/10">
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-white/40 gap-3">
+            <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+            </svg>
+            <span class="text-sm">프로필 사진 (1:1.25)</span>
+          </div>
+          <div class="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-accent/30 blur-3xl"></div>
+        </div>
+      </div>
+
+      <div class="reveal md:col-span-6 md:col-start-7">
+        <h2 class="text-3xl md:text-5xl font-black leading-tight tracking-tight mb-8">
+          디자인은 <span class="text-accent">보이는 것</span>을 넘어<br />
+          <span class="text-white/40">느껴지는 경험</span>을 만드는 일이라고 믿습니다.
+        </h2>
+        <div class="space-y-5 text-white/60 leading-relaxed text-base md:text-lg">
+          <p>
+            안녕하세요. 다양한 브랜드와 서비스의 화면을 디자인해 온 웹디자이너 강은서입니다.
+            복잡한 기능도 사용자가 한눈에 이해할 수 있도록 구조를 정리하고,
+            여백과 타이포그래피로 메시지의 호흡을 설계합니다.
+          </p>
+          <p>
+            기획 단계의 리서치부터 와이어프레임, 비주얼 디자인, 그리고 실제 동작하는 HTML/CSS 퍼블리싱까지
+            하나의 흐름으로 다룹니다. 디자이너가 만든 의도가 개발 결과물에서도 그대로 살아 있도록 하는 것이 제 강점입니다.
+          </p>
+        </div>
+
+        <div class="mt-12">
+          <p class="font-display text-xs tracking-[0.3em] uppercase text-white/40 mb-5">Skills</p>
+          <div class="flex flex-wrap gap-3">
+            <span class="px-5 py-2.5 rounded-full border border-white/15 text-sm hover:bg-accent hover:text-ink hover:border-accent transition cursor-default">Photoshop</span>
+            <span class="px-5 py-2.5 rounded-full border border-white/15 text-sm hover:bg-accent hover:text-ink hover:border-accent transition cursor-default">Illustrator</span>
+            <span class="px-5 py-2.5 rounded-full border border-white/15 text-sm hover:bg-accent hover:text-ink hover:border-accent transition cursor-default">After Effects</span>
+            <span class="px-5 py-2.5 rounded-full border border-white/15 text-sm hover:bg-accent hover:text-ink hover:border-accent transition cursor-default">Premiere</span>
+            <span class="px-5 py-2.5 rounded-full border border-white/15 text-sm hover:bg-accent hover:text-ink hover:border-accent transition cursor-default">Rhinoceros 3D</span>
+            <span class="px-5 py-2.5 rounded-full border border-white/15 text-sm hover:bg-accent hover:text-ink hover:border-accent transition cursor-default">KeyShot</span>
+            <span class="px-5 py-2.5 rounded-full border border-white/15 text-sm hover:bg-accent hover:text-ink hover:border-accent transition cursor-default">HTML / CSS</span>
+            <span class="px-5 py-2.5 rounded-full border border-white/15 text-sm hover:bg-accent hover:text-ink hover:border-accent transition cursor-default">UI/UX Design</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 포트폴리오 -->
+  <section id="works" data-growth-stage="bud" class="py-32 px-6 bg-white/[0.02] border-y border-white/5">
+    <div class="max-w-7xl mx-auto">
+      <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+        <div>
+          <p class="font-display text-xs tracking-[0.3em] uppercase text-accent mb-4">02 — Works</p>
+          <h2 class="text-3xl md:text-5xl font-black tracking-tight">선택한 프로젝트</h2>
+        </div>
+      </div>
+
+      <div class="reveal flex flex-wrap gap-2 mb-10" role="group" aria-label="작업물 카테고리 필터">
+        <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="branding" aria-pressed="false">Branding</button>
+        <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="uiux" aria-pressed="false">UI/UX</button>
+        <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="landing" aria-pressed="false">Landing Page</button>
+        <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="web" aria-pressed="false">Web Design</button>
+      </div>
+
+      <div id="workGrid" class="grid md:grid-cols-2 gap-8">
+        <!-- Work 01 -->
+        <article class="reveal work-card group cursor-pointer" data-category="branding">
+          <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-accent/30 via-white/5 to-ink border border-white/10">
+            <div class="thumb absolute inset-0 flex items-center justify-center">
+              <span class="font-display text-white/30 text-sm tracking-widest">IMAGE PLACEHOLDER · 01</span>
+            </div>
+            <span class="absolute top-5 left-5 px-3 py-1 rounded-full bg-ink/70 backdrop-blur text-xs">Branding</span>
+          </div>
+          <div class="mt-6 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">브랜드 리뉴얼 프로젝트</h3>
+              <p class="mt-2 text-white/50 text-sm">로고, 컬러 시스템, 가이드라인 설계</p>
+            </div>
+            <span class="text-white/40 group-hover:text-accent group-hover:rotate-45 transition text-2xl">↗</span>
+          </div>
+        </article>
+
+        <!-- Work 02 -->
+        <article class="reveal work-card group cursor-pointer" data-category="uiux">
+          <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-white/15 via-white/5 to-ink border border-white/10">
+            <div class="thumb absolute inset-0 flex items-center justify-center">
+              <span class="font-display text-white/30 text-sm tracking-widest">IMAGE PLACEHOLDER · 02</span>
+            </div>
+            <span class="absolute top-5 left-5 px-3 py-1 rounded-full bg-ink/70 backdrop-blur text-xs">UI/UX</span>
+          </div>
+          <div class="mt-6 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">금융 앱 리디자인</h3>
+              <p class="mt-2 text-white/50 text-sm">사용자 리서치 기반 정보 구조 개선 및 프로토타입</p>
+            </div>
+            <span class="text-white/40 group-hover:text-accent group-hover:rotate-45 transition text-2xl">↗</span>
+          </div>
+        </article>
+
+        <!-- Work 03 -->
+        <article class="reveal work-card group cursor-pointer" data-category="landing">
+          <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-ink via-white/5 to-accent/20 border border-white/10">
+            <div class="thumb absolute inset-0 flex items-center justify-center">
+              <span class="font-display text-white/30 text-sm tracking-widest">IMAGE PLACEHOLDER · 03</span>
+            </div>
+            <span class="absolute top-5 left-5 px-3 py-1 rounded-full bg-ink/70 backdrop-blur text-xs">Landing Page</span>
+          </div>
+          <div class="mt-6 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">크리에이터 랜딩 페이지</h3>
+              <p class="mt-2 text-white/50 text-sm">모션 중심의 스크롤 인터랙션, 반응형 HTML/CSS 구현</p>
+            </div>
+            <span class="text-white/40 group-hover:text-accent group-hover:rotate-45 transition text-2xl">↗</span>
+          </div>
+        </article>
+
+        <!-- Work 04 -->
+        <article class="reveal work-card group cursor-pointer" data-category="web">
+          <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-white/5 via-accent/15 to-ink border border-white/10">
+            <div class="thumb absolute inset-0 flex items-center justify-center">
+              <span class="font-display text-white/30 text-sm tracking-widest">IMAGE PLACEHOLDER · 04</span>
+            </div>
+            <span class="absolute top-5 left-5 px-3 py-1 rounded-full bg-ink/70 backdrop-blur text-xs">Web Design</span>
+          </div>
+          <div class="mt-6 flex items-start justify-between gap-4">
+            <div>
+              <h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">편집숍 온라인 쇼핑몰</h3>
+              <p class="mt-2 text-white/50 text-sm">상품 큐레이션 중심의 그리드 레이아웃과 브랜드 경험 설계</p>
+            </div>
+            <span class="text-white/40 group-hover:text-accent group-hover:rotate-45 transition text-2xl">↗</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 문의 -->
+  <section id="contact" data-growth-stage="flower" class="py-32 px-6 relative overflow-hidden">
+    <div class="orb absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[32rem] h-[32rem] rounded-full bg-accent/10 blur-[140px] pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto grid md:grid-cols-12 gap-16">
+      <div class="reveal md:col-span-5">
+        <p class="font-display text-xs tracking-[0.3em] uppercase text-accent mb-4">03 — Contact</p>
+        <h2 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-8">
+          함께 만들 다음<br />프로젝트를<br />기다립니다.
+        </h2>
+        <ul class="space-y-5">
+          <li>
+            <a href="mailto:medare2008@gmail.com" class="group flex items-center justify-between border-b border-white/10 pb-4 hover:border-accent transition">
+              <span class="text-white/40 text-sm font-display tracking-widest">EMAIL</span>
+              <span class="group-hover:text-accent transition">medare2008@gmail.com</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <form id="contactForm" class="reveal md:col-span-6 md:col-start-7 space-y-6 bg-white/[0.03] border border-white/10 rounded-3xl p-8 md:p-12 backdrop-blur">
+        <div>
+          <label for="name" class="block text-sm text-white/60 mb-2">이름</label>
+          <input id="name" name="name" type="text" required placeholder="홍길동"
+                 class="w-full bg-transparent border-b border-white/20 py-3 focus:outline-none focus:border-accent transition placeholder:text-white/20" />
+        </div>
+        <div>
+          <label for="email" class="block text-sm text-white/60 mb-2">이메일</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com"
+                 class="w-full bg-transparent border-b border-white/20 py-3 focus:outline-none focus:border-accent transition placeholder:text-white/20" />
+        </div>
+        <div>
+          <label for="type" class="block text-sm text-white/60 mb-2">문의 유형</label>
+          <select id="type" name="type"
+                  class="w-full bg-ink border-b border-white/20 py-3 focus:outline-none focus:border-accent transition text-white/80">
+            <option>웹사이트 디자인</option>
+            <option>UI/UX 디자인</option>
+            <option>브랜딩</option>
+            <option>퍼블리싱 (HTML/CSS)</option>
+            <option>기타 협업</option>
+          </select>
+        </div>
+        <div>
+          <label for="message" class="block text-sm text-white/60 mb-2">메시지</label>
+          <textarea id="message" name="message" rows="4" required placeholder="프로젝트에 대해 간단히 알려주세요."
+                    class="w-full bg-transparent border-b border-white/20 py-3 focus:outline-none focus:border-accent transition resize-none placeholder:text-white/20"></textarea>
+        </div>
+        <button type="submit"
+                class="w-full bg-accent text-ink font-bold py-4 rounded-full hover:shadow-[0_0_40px_-5px_#D4FF3A] transition">
+          보내기
+        </button>
+        <p id="formMsg" class="text-sm text-accent min-h-[1.25rem] text-center"></p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/10 py-10 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/40">
+      <p class="font-display tracking-widest">© 2026 강은서. ALL RIGHTS RESERVED.</p>
+      <a href="#top" class="hover:text-accent transition">↑ 맨 위로</a>
+    </div>
+  </footer>
+
+  <script>
+    // 데스크톱에서만 라임 포인트 커서를 표시하고, 터치 기기에서는 기본 동작을 유지합니다.
+    const customCursor = document.querySelector('.custom-cursor');
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    if (finePointer.matches) {
+      let pointerX = 0;
+      let pointerY = 0;
+      let cursorX = 0;
+      let cursorY = 0;
+      let hasPointerPosition = false;
+      const followCursor = () => {
+        if (hasPointerPosition) {
+          cursorX += (pointerX - cursorX) * 0.22;
+          cursorY += (pointerY - cursorY) * 0.22;
+          customCursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+        }
+        requestAnimationFrame(followCursor);
+      };
+      requestAnimationFrame(followCursor);
+      window.addEventListener('mousemove', (event) => {
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        if (!hasPointerPosition) {
+          cursorX = pointerX;
+          cursorY = pointerY;
+          hasPointerPosition = true;
+        }
+        customCursor.classList.add('is-visible');
+      }, { passive: true });
+      document.addEventListener('mouseover', (event) => {
+        customCursor.classList.toggle('is-hovering', Boolean(event.target.closest('a, button, input, select, textarea, [role="button"], .work-card')));
+      });
+      document.addEventListener('mousedown', () => customCursor.classList.add('is-pressed'));
+      document.addEventListener('mouseup', () => customCursor.classList.remove('is-pressed'));
+      document.addEventListener('mouseleave', () => customCursor.classList.remove('is-visible'));
+      document.addEventListener('mouseenter', () => {
+        if (hasPointerPosition) customCursor.classList.add('is-visible');
+      });
+    }
+
+    // 스크롤 리빌
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    // 각 섹션에 도달할 때 상단의 씨앗 아이콘이 차례로 자랍니다.
+    const growthMark = document.querySelector('.growth-track');
+    const growthSteps = ['seed', 'sprout', 'bud', 'flower'];
+    let currentGrowthIndex = -1;
+    const updateGrowth = (stage) => {
+      growthMark.dataset.stage = stage;
+      const activeIndex = growthSteps.indexOf(stage);
+      if (activeIndex === currentGrowthIndex) return;
+      const previousIndex = currentGrowthIndex;
+      document.querySelectorAll('[data-growth-step]').forEach((art) => {
+        const stepIndex = growthSteps.indexOf(art.dataset.growthStep);
+        art.getAnimations().forEach((animation) => animation.cancel());
+        art.classList.toggle('is-current', stepIndex === activeIndex);
+        if (stepIndex === activeIndex && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const unitWidth = growthMark.clientWidth / 320;
+          const offset = previousIndex < 0 ? 0 : (previousIndex - activeIndex) * 90 * unitWidth;
+          art.animate([
+            { opacity: 0, transform: `translateX(${offset}px) scale(.72)` },
+            { opacity: 1, transform: 'translateX(0) scale(1)' },
+          ], {
+            duration: 850,
+            easing: 'cubic-bezier(.2,.7,.2,1)',
+            fill: 'both',
+          });
+        }
+      });
+      currentGrowthIndex = activeIndex;
+    };
+    updateGrowth('seed');
+    const growthObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) updateGrowth(entry.target.dataset.growthStage);
+      });
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+    document.querySelectorAll('[data-growth-stage]').forEach((section) => growthObserver.observe(section));
+
+    // 카테고리 필터: 새 작업을 추가할 때 카드에 data-category를 지정하면 함께 필터링됩니다.
+    const workFilters = document.querySelectorAll('.work-filter');
+    const workCards = document.querySelectorAll('.work-card[data-category]');
+    workFilters.forEach((button) => {
+      button.addEventListener('click', () => {
+        const selectedCategory = button.dataset.filter;
+        workFilters.forEach((filter) => filter.setAttribute('aria-pressed', String(filter === button)));
+        workCards.forEach((card) => {
+          card.hidden = selectedCategory !== 'all' && card.dataset.category !== selectedCategory;
+        });
+      });
+    });
+
+    // 문의 폼 (데모: 실제 전송 없이 완료 메시지 표시)
+    const form = document.getElementById('contactForm');
+    const formMsg = document.getElementById('formMsg');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      formMsg.textContent = '문의가 접수되었습니다. 곧 연락드리겠습니다!';
+      form.reset();
+      setTimeout(() => (formMsg.textContent = ''), 4000);
+    });
+  </script>
+</body>
+</html>
