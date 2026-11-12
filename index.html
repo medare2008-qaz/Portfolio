@@ -126,6 +126,14 @@
     /* 카드 호버 - 이미지 확대 */
     .work-card .thumb { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
     .work-card:hover .thumb { transform: scale(1.06); }
+    .project-cover { position: relative; display: flex; aspect-ratio: 4 / 3; align-items: center; justify-content: center; overflow: hidden; border: 1px solid rgba(255,255,255,.1); border-radius: 1rem; background: linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.015)); }
+    .project-cover-image { display: block; width: 100%; height: 100%; padding: 1rem; object-fit: contain; }
+    .project-cover::before { content: ''; position: absolute; inset: 1rem; border: 1px solid rgba(255,255,255,.08); border-radius: .65rem; pointer-events: none; }
+    .project-cover .asset-note { color: rgba(255,255,255,.42); font: 500 .7rem 'Space Grotesk', sans-serif; letter-spacing: .18em; text-align: center; text-transform: uppercase; }
+    .project-cover .cover-index { position: absolute; right: 1.5rem; bottom: 1.5rem; padding: .4rem .55rem; border: 1px solid rgba(255,255,255,.16); border-radius: 999px; background: rgba(10,10,10,.74); color: rgba(255,255,255,.76); font: 500 .65rem 'Space Grotesk', sans-serif; letter-spacing: .12em; backdrop-filter: blur(8px); }
+    .project-link:focus-visible { outline: 2px solid #D4FF3A; outline-offset: 6px; border-radius: 1rem; }
+    .project-link:hover .project-cover { border-color: rgba(212,255,58,.38); }
+    .project-link:hover .asset-note { color: rgba(212,255,58,.8); }
     .work-filter { border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.58); transition: color .2s ease, background-color .2s ease, border-color .2s ease; }
     .work-filter:hover { color: #D4FF3A; border-color: rgba(212,255,58,.65); }
     .work-filter[aria-pressed="true"] { color: #0A0A0A; background: #D4FF3A; border-color: #D4FF3A; }
@@ -260,79 +268,42 @@
 
       <div class="reveal flex flex-wrap gap-2 mb-10" role="group" aria-label="작업물 카테고리 필터">
         <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="product" aria-pressed="false">Product Design</button>
         <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="branding" aria-pressed="false">Branding</button>
-        <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="uiux" aria-pressed="false">UI/UX</button>
-        <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="landing" aria-pressed="false">Landing Page</button>
-        <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="web" aria-pressed="false">Web Design</button>
+        <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="packaging" aria-pressed="false">Packaging</button>
+        <button type="button" class="work-filter px-5 py-2 rounded-full text-sm" data-filter="character" aria-pressed="false">Character Design</button>
       </div>
 
-      <div id="workGrid" class="grid md:grid-cols-2 gap-8">
-        <!-- Work 01 -->
-        <article class="reveal work-card group cursor-pointer" data-category="branding">
-          <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-accent/30 via-white/5 to-ink border border-white/10">
-            <div class="thumb absolute inset-0 flex items-center justify-center">
-              <span class="font-display text-white/30 text-sm tracking-widest">IMAGE PLACEHOLDER · 01</span>
-            </div>
-            <span class="absolute top-5 left-5 px-3 py-1 rounded-full bg-ink/70 backdrop-blur text-xs">Branding</span>
-          </div>
-          <div class="mt-6 flex items-start justify-between gap-4">
-            <div>
-              <h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">브랜드 리뉴얼 프로젝트</h3>
-              <p class="mt-2 text-white/50 text-sm">로고, 컬러 시스템, 가이드라인 설계</p>
-            </div>
-            <span class="text-white/40 group-hover:text-accent group-hover:rotate-45 transition text-2xl">↗</span>
-          </div>
+      <div id="workGrid" class="grid sm:grid-cols-2 gap-x-8 gap-y-14 lg:gap-y-20">
+        <article class="reveal work-card" data-categories="product">
+          <a class="project-link group block" href="project.html?project=first-snow">
+            <div class="project-cover"><img class="project-cover-image" src="assets/projects/first-snow/main.jpg" alt="First Snow 자동 제설제 살포 장치 렌더링" loading="lazy" /><span class="cover-index">01 / PRODUCT</span></div>
+            <div class="mt-6 flex items-start justify-between gap-4"><div><p class="font-display text-xs tracking-[0.2em] uppercase text-accent mb-2">Product Design</p><h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">First Snow</h3><p class="mt-2 text-white/55 text-sm leading-relaxed">자동 제설제 살포 장치 디자인</p></div><span class="mt-4 text-white/40 group-hover:text-accent group-hover:translate-x-1 group-hover:-translate-y-1 transition text-2xl">↗</span></div>
+          </a>
         </article>
-
-        <!-- Work 02 -->
-        <article class="reveal work-card group cursor-pointer" data-category="uiux">
-          <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-white/15 via-white/5 to-ink border border-white/10">
-            <div class="thumb absolute inset-0 flex items-center justify-center">
-              <span class="font-display text-white/30 text-sm tracking-widest">IMAGE PLACEHOLDER · 02</span>
-            </div>
-            <span class="absolute top-5 left-5 px-3 py-1 rounded-full bg-ink/70 backdrop-blur text-xs">UI/UX</span>
-          </div>
-          <div class="mt-6 flex items-start justify-between gap-4">
-            <div>
-              <h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">금융 앱 리디자인</h3>
-              <p class="mt-2 text-white/50 text-sm">사용자 리서치 기반 정보 구조 개선 및 프로토타입</p>
-            </div>
-            <span class="text-white/40 group-hover:text-accent group-hover:rotate-45 transition text-2xl">↗</span>
-          </div>
+        <article class="reveal work-card" data-categories="branding packaging">
+          <a class="project-link group block" href="project.html?project=lemonade">
+            <div class="project-cover"><img class="project-cover-image" src="assets/projects/lemonade/label.png" alt="레몬에이드 음료 패키지 라벨 디자인" loading="lazy" /><span class="cover-index">02 / BRANDING</span></div>
+            <div class="mt-6 flex items-start justify-between gap-4"><div><p class="font-display text-xs tracking-[0.2em] uppercase text-accent mb-2">Branding / Packaging</p><h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">레몬에이드</h3><p class="mt-2 text-white/55 text-sm leading-relaxed">레몬에이드 음료 패키지 디자인</p></div><span class="mt-4 text-white/40 group-hover:text-accent group-hover:translate-x-1 group-hover:-translate-y-1 transition text-2xl">↗</span></div>
+          </a>
         </article>
-
-        <!-- Work 03 -->
-        <article class="reveal work-card group cursor-pointer" data-category="landing">
-          <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-ink via-white/5 to-accent/20 border border-white/10">
-            <div class="thumb absolute inset-0 flex items-center justify-center">
-              <span class="font-display text-white/30 text-sm tracking-widest">IMAGE PLACEHOLDER · 03</span>
-            </div>
-            <span class="absolute top-5 left-5 px-3 py-1 rounded-full bg-ink/70 backdrop-blur text-xs">Landing Page</span>
-          </div>
-          <div class="mt-6 flex items-start justify-between gap-4">
-            <div>
-              <h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">크리에이터 랜딩 페이지</h3>
-              <p class="mt-2 text-white/50 text-sm">모션 중심의 스크롤 인터랙션, 반응형 HTML/CSS 구현</p>
-            </div>
-            <span class="text-white/40 group-hover:text-accent group-hover:rotate-45 transition text-2xl">↗</span>
-          </div>
+        <article class="reveal work-card" data-categories="product">
+          <a class="project-link group block" href="project.html?project=campfire-light">
+            <div class="project-cover"><img class="project-cover-image" src="assets/projects/campfire-light/campfire-01.png" alt="캠프파이어 조명 제품 렌더링" loading="lazy" /><span class="cover-index">03 / PRODUCT</span></div>
+            <div class="mt-6 flex items-start justify-between gap-4"><div><p class="font-display text-xs tracking-[0.2em] uppercase text-accent mb-2">Product Design</p><h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">캠프파이어 조명</h3><p class="mt-2 text-white/55 text-sm leading-relaxed">업사이클링 소재를 활용한 조명 디자인</p></div><span class="mt-4 text-white/40 group-hover:text-accent group-hover:translate-x-1 group-hover:-translate-y-1 transition text-2xl">↗</span></div>
+          </a>
         </article>
-
-        <!-- Work 04 -->
-        <article class="reveal work-card group cursor-pointer" data-category="web">
-          <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-white/5 via-accent/15 to-ink border border-white/10">
-            <div class="thumb absolute inset-0 flex items-center justify-center">
-              <span class="font-display text-white/30 text-sm tracking-widest">IMAGE PLACEHOLDER · 04</span>
-            </div>
-            <span class="absolute top-5 left-5 px-3 py-1 rounded-full bg-ink/70 backdrop-blur text-xs">Web Design</span>
-          </div>
-          <div class="mt-6 flex items-start justify-between gap-4">
-            <div>
-              <h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">편집숍 온라인 쇼핑몰</h3>
-              <p class="mt-2 text-white/50 text-sm">상품 큐레이션 중심의 그리드 레이아웃과 브랜드 경험 설계</p>
-            </div>
-            <span class="text-white/40 group-hover:text-accent group-hover:rotate-45 transition text-2xl">↗</span>
-          </div>
+        <article class="reveal work-card" data-categories="character">
+          <a class="project-link group block" href="project.html?project=go-junim">
+            <div class="project-cover"><img class="project-cover-image" src="assets/projects/go-junim/character-sheet.png" alt="GO주임 캐릭터 정면, 측면, 후면과 표정 디자인 자료" loading="lazy" /><span class="cover-index">04 / CHARACTER</span></div>
+            <div class="mt-6 flex items-start justify-between gap-4"><div><p class="font-display text-xs tracking-[0.2em] uppercase text-accent mb-2">Character Design</p><h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">GO주임</h3><p class="mt-2 text-white/55 text-sm leading-relaxed">직장인의 일상과 위로를 주제로 한 단편 애니메이션 캐릭터 디자인</p></div><span class="mt-4 text-white/40 group-hover:text-accent group-hover:translate-x-1 group-hover:-translate-y-1 transition text-2xl">↗</span></div>
+          </a>
+        </article>
+        <article class="reveal work-card sm:col-span-2 lg:col-span-1" data-categories="branding">
+          <a class="project-link group block" href="project.html?project=sagyeon">
+            <div class="project-cover"><span class="asset-note">작품 이미지 자료 필요<br />사계온</span><span class="cover-index">05 / BRANDING</span></div>
+            <div class="mt-6 flex items-start justify-between gap-4"><div><p class="font-display text-xs tracking-[0.2em] uppercase text-accent mb-2">Branding</p><h3 class="text-xl md:text-2xl font-bold group-hover:text-accent transition">사계온</h3><p class="mt-2 text-white/55 text-sm leading-relaxed">사계절을 주제로 한 카페 브랜딩 및 캐릭터 디자인</p></div><span class="mt-4 text-white/40 group-hover:text-accent group-hover:translate-x-1 group-hover:-translate-y-1 transition text-2xl">↗</span></div>
+          </a>
         </article>
       </div>
     </div>
@@ -490,13 +461,14 @@
 
     // 카테고리 필터: 새 작업을 추가할 때 카드에 data-category를 지정하면 함께 필터링됩니다.
     const workFilters = document.querySelectorAll('.work-filter');
-    const workCards = document.querySelectorAll('.work-card[data-category]');
+    const workCards = document.querySelectorAll('.work-card[data-categories]');
     workFilters.forEach((button) => {
       button.addEventListener('click', () => {
         const selectedCategory = button.dataset.filter;
         workFilters.forEach((filter) => filter.setAttribute('aria-pressed', String(filter === button)));
         workCards.forEach((card) => {
-          card.hidden = selectedCategory !== 'all' && card.dataset.category !== selectedCategory;
+          const categories = card.dataset.categories.split(/\s+/);
+          card.hidden = selectedCategory !== 'all' && !categories.includes(selectedCategory);
         });
       });
     });

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0A0A0A" />
+  <title>Project · 강은서</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { accent: '#D4FF3A', ink: '#0A0A0A' }, fontFamily: { sans: ['Pretendard', 'Noto Sans KR', 'sans-serif'], display: ['Space Grotesk', 'Pretendard', 'sans-serif'] } } } };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Pretendard', 'Noto Sans KR', sans-serif; }
+    ::selection { background: #D4FF3A; color: #0A0A0A; }
+    .detail-header { background: rgba(10,10,10,.78); backdrop-filter: blur(16px); }
+    .detail-hero { padding-top: clamp(9rem, 20vh, 13rem); padding-bottom: clamp(4rem, 10vh, 8rem); }
+    .detail-eyebrow { color: #D4FF3A; font: 500 .72rem 'Space Grotesk', sans-serif; letter-spacing: .22em; text-transform: uppercase; }
+    .detail-title { overflow-wrap: anywhere; }
+    .detail-summary { max-width: 46rem; color: rgba(255,255,255,.62); line-height: 1.8; }
+    .detail-rule { border-color: rgba(255,255,255,.12); }
+    .asset-empty { min-height: clamp(260px, 54vw, 680px); display: grid; place-content: center; gap: .85rem; padding: 2rem; border: 1px solid rgba(255,255,255,.12); border-radius: 1.25rem; background: linear-gradient(135deg, rgba(255,255,255,.045), rgba(255,255,255,.012)); text-align: center; }
+    .asset-empty .asset-label { color: #D4FF3A; font: 500 .7rem 'Space Grotesk', sans-serif; letter-spacing: .2em; }
+    .asset-empty p { max-width: 28rem; margin: 0 auto; color: rgba(255,255,255,.45); font-size: .9rem; line-height: 1.75; }
+    .project-gallery { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 1rem; }
+    .gallery-item { grid-column: span 6; min-width: 0; margin: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.1); border-radius: 1rem; background: rgba(255,255,255,.025); }
+    .gallery-item:first-child { grid-column: span 12; }
+    .gallery-item button { display: block; width: 100%; padding: 0; border: 0; background: none; }
+    .gallery-item img { display: block; width: 100%; height: auto; max-height: 82vh; object-fit: contain; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+    .gallery-item button:hover img { transform: scale(1.015); }
+    .layout-product-study .gallery-item:first-child { grid-column: span 8; }
+    .layout-product-study .gallery-item:nth-child(2) { grid-column: span 4; align-self: end; }
+    .layout-product-renders .gallery-item:first-child { grid-column: span 12; }
+    .layout-product-renders .gallery-item:nth-child(2), .layout-product-renders .gallery-item:nth-child(3) { grid-column: span 6; }
+    .layout-packaging .gallery-item:first-child { grid-column: span 9; }
+    .layout-character-sheet .gallery-item:first-child { grid-column: span 12; }
+    .layout-branding-system .gallery-item:first-child { grid-column: span 8; }
+    .layout-branding-system .gallery-item:nth-child(2) { grid-column: span 4; align-self: end; }
+    .project-nav-link { color: rgba(255,255,255,.72); transition: color .2s ease; }
+    .project-nav-link:hover { color: #D4FF3A; }
+    .lightbox { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 1.25rem; background: rgba(0,0,0,.92); }
+    .lightbox[hidden] { display: none; }
+    .lightbox img { max-width: min(94vw, 1500px); max-height: 88vh; object-fit: contain; }
+    @media (max-width: 640px) {
+      .project-gallery { grid-template-columns: 1fr; gap: .75rem; }
+      .gallery-item, .gallery-item:first-child, .layout-product-study .gallery-item:first-child, .layout-product-study .gallery-item:nth-child(2), .layout-product-renders .gallery-item:first-child, .layout-product-renders .gallery-item:nth-child(2), .layout-product-renders .gallery-item:nth-child(3), .layout-packaging .gallery-item:first-child, .layout-character-sheet .gallery-item:first-child, .layout-branding-system .gallery-item:first-child, .layout-branding-system .gallery-item:nth-child(2) { grid-column: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+  </style>
+</head>
+<body class="bg-ink text-white antialiased">
+  <header class="detail-header fixed inset-x-0 top-0 z-50 border-b border-white/5">
+    <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+      <a href="index.html#top" class="inline-flex items-center gap-3" aria-label="강은서 포트폴리오 첫 화면">
+        <svg aria-hidden="true" viewBox="0 0 32 32" class="h-7 w-7 fill-none stroke-accent" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 28V16M16 20c-5 0-8-3-8-7 5 0 8 3 8 7Zm0-4c0-5 3-8 7-8 0 5-3 8-7 8Z"/><path d="M16 12c-2-2-2-5 0-7 2 2 2 5 0 7Zm0 0c-3-1-6 0-7 2 2 3 5 3 7-2Zm0 0c3-1 6 0 7 2-2 3-5 3-7-2Z"/><circle cx="16" cy="12" r="1.5" fill="#D4FF3A" stroke="none"/></svg>
+        <span class="font-display text-xs tracking-[.18em] text-white/65">EUNSEO KANG</span>
+      </a>
+      <a href="index.html#works" class="font-display text-xs tracking-[.18em] text-white/65 transition hover:text-accent">← WORKS</a>
+    </nav>
+  </header>
+
+  <main id="projectDetail" class="mx-auto max-w-7xl px-6 pb-24"></main>
+
+  <footer class="border-t border-white/10 px-6 py-8">
+    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-white/40 md:flex-row">
+      <p class="font-display tracking-widest">© 2026 강은서. ALL RIGHTS RESERVED.</p>
+      <a href="index.html#contact" class="transition hover:text-accent">Contact</a>
+    </div>
+  </footer>
+
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="작품 이미지 확대" hidden>
+    <button id="lightboxClose" type="button" class="absolute right-6 top-5 text-4xl leading-none text-white/70 hover:text-accent" aria-label="이미지 닫기">×</button>
+    <img id="lightboxImage" src="" alt="" />
+  </div>
+
+  <script>
+    // 실제 제공 이미지가 생기면 각 프로젝트의 images 배열에 경로와 대체 텍스트를 추가합니다.
+    const projects = [
+      { id: 'first-snow', title: 'First Snow', category: 'Product Design', filters: ['product'], description: '자동 제설제 살포 장치 디자인', layout: 'product-study', images: [
+        { src: 'assets/projects/first-snow/main.jpg', alt: 'First Snow 자동 제설제 살포 장치 렌더링' },
+        { src: 'assets/projects/first-snow/sketch.jpg', alt: '제설제 보충과 살포부 구조를 표시한 First Snow 디자인 스케치' },
+      ], features: ['상부 투입구와 제설제 보충 공간', '하부 살포구를 통한 제설제 배출', '회전 프로펠러를 이용한 제설제 살포', '어두운 계단을 비추는 LED 라이트'] },
+      { id: 'lemonade', title: '레몬에이드', category: 'Branding / Packaging', filters: ['branding', 'packaging'], description: '레몬에이드 음료 패키지 디자인', layout: 'packaging', images: [
+        { src: 'assets/projects/lemonade/label.png', alt: '레몬에이드 음료 패키지 라벨 전개 디자인' },
+      ] },
+      { id: 'campfire-light', title: '캠프파이어 조명', category: 'Product Design', filters: ['product'], description: '업사이클링 소재를 활용한 조명 디자인', layout: 'product-renders', images: [
+        { src: 'assets/projects/campfire-light/campfire-01.png', alt: '캠프파이어 조명 제품 렌더링 1' },
+        { src: 'assets/projects/campfire-light/campfire-02.png', alt: '캠프파이어 조명 제품 렌더링 2' },
+        { src: 'assets/projects/campfire-light/campfire-03.png', alt: '어두운 배경의 캠프파이어 조명 렌더링' },
+      ] },
+      { id: 'go-junim', title: 'GO주임', category: 'Character Design', filters: ['character'], description: '직장인의 일상과 위로를 주제로 한 단편 애니메이션 캐릭터 디자인', layout: 'character-sheet', images: [
+        { src: 'assets/projects/go-junim/character-sheet.png', alt: 'GO주임 캐릭터 정면, 측면, 후면과 표정 디자인 자료' },
+      ] },
+      { id: 'sagyeon', title: '사계온', category: 'Branding', filters: ['branding'], description: '사계절을 주제로 한 카페 브랜딩 및 캐릭터 디자인', layout: 'branding-system', images: [] },
+    ];
+
+    const currentId = new URLSearchParams(window.location.search).get('project');
+    const projectIndex = projects.findIndex((project) => project.id === currentId);
+    const project = projects[projectIndex];
+    const root = document.getElementById('projectDetail');
+
+    if (!project) {
+      document.title = 'Project not found · 강은서';
+      root.innerHTML = '<section class="detail-hero"><p class="detail-eyebrow">PROJECT NOT FOUND</p><h1 class="mt-6 text-4xl font-black">프로젝트를 찾을 수 없습니다.</h1><a class="mt-10 inline-block text-accent" href="index.html#works">작업물 목록으로 돌아가기 ↗</a></section>';
+    } else {
+      document.title = `${project.title} · 강은서 포트폴리오`;
+      const previous = projects[(projectIndex + projects.length - 1) % projects.length];
+      const next = projects[(projectIndex + 1) % projects.length];
+      const gallery = project.images.length
+        ? `<div class="project-gallery layout-${project.layout}">${project.images.map((image, index) => `<figure class="gallery-item"><button type="button" data-zoom="${index}" aria-label="${project.title} 이미지 확대"><img src="${image.src}" alt="${image.alt}" loading="lazy" /></button></figure>`).join('')}</div>`
+        : '<div class="asset-empty"><span class="asset-label">PROJECT IMAGES NEEDED</span><p>이 프로젝트의 실제 작품 이미지가 아직 폴더에 없습니다.<br />이미지를 제공해 주시면 성격에 맞는 갤러리 구성과 확대 기능으로 보여드릴게요.</p></div>';
+      const featureSection = project.features?.length
+        ? `<section class="grid gap-8 border-b detail-rule py-8 md:grid-cols-[1fr_2fr] md:gap-16 md:py-10" aria-label="주요 디자인 특징"><p class="detail-eyebrow">DESIGN FEATURES</p><ul class="grid gap-3 text-white/72 sm:grid-cols-2">${project.features.map((feature) => `<li class="border-l border-accent/60 pl-4 leading-relaxed">${feature}</li>`).join('')}</ul></section>`
+        : '';
+
+      root.innerHTML = `
+        <section class="detail-hero">
+          <p class="detail-eyebrow">${String(projectIndex + 1).padStart(2, '0')} / ${project.category}</p>
+          <h1 class="detail-title mt-7 text-5xl font-black leading-[1.08] tracking-tight sm:text-6xl md:text-8xl">${project.title}</h1>
+          <p class="detail-summary mt-8 text-base md:text-xl">${project.description}</p>
+        </section>
+        <section class="grid gap-8 border-y detail-rule py-8 md:grid-cols-[1fr_2fr] md:gap-16 md:py-10" aria-label="프로젝트 개요">
+          <p class="detail-eyebrow">PROJECT OVERVIEW</p>
+          <dl class="grid gap-6 sm:grid-cols-2">
+            <div><dt class="text-xs tracking-[.18em] text-white/35">분야</dt><dd class="mt-2 text-white/85">${project.category}</dd></div>
+            <div><dt class="text-xs tracking-[.18em] text-white/35">프로젝트 소개</dt><dd class="mt-2 leading-relaxed text-white/65">${project.description}</dd></div>
+          </dl>
+        </section>
+        ${featureSection}
+        <section class="py-12 md:py-20" aria-label="${project.title} 작품 이미지">${gallery}</section>
+        <nav class="grid grid-cols-2 border-t detail-rule pt-8" aria-label="이전 및 다음 프로젝트">
+          <a class="project-nav-link" href="project.html?project=${previous.id}"><span class="block font-display text-xs tracking-[.2em] text-white/35">← PREVIOUS</span><span class="mt-3 block text-lg font-semibold">${previous.title}</span></a>
+          <a class="project-nav-link text-right" href="project.html?project=${next.id}"><span class="block font-display text-xs tracking-[.2em] text-white/35">NEXT →</span><span class="mt-3 block text-lg font-semibold">${next.title}</span></a>
+        </nav>`;
+
+      const imageButtons = root.querySelectorAll('[data-zoom]');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImage = document.getElementById('lightboxImage');
+      const closeButton = document.getElementById('lightboxClose');
+      const closeLightbox = () => { lightbox.hidden = true; lightboxImage.src = ''; };
+      imageButtons.forEach((button) => button.addEventListener('click', () => {
+        const image = button.querySelector('img');
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        lightbox.hidden = false;
+        closeButton.focus();
+      }));
+      closeButton.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', (event) => { if (event.target === lightbox) closeLightbox(); });
+      document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !lightbox.hidden) closeLightbox(); });
+    }
+  </script>
+</body>
+</html>
